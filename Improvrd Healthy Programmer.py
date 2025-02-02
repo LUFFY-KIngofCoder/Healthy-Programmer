@@ -1,12 +1,12 @@
 from pygame import mixer
-from datetime import date
-from time import time,strftime
+from datetime import date, datetime
+from time import time, strftime
 
-def mujic(file , stopper, start_h = 0):
+def mujic(file, stopper, start_h=0):
     mixer.init()
     music = mixer.music
     music.load(file)
-    music.play(start = start_h)
+    music.play(start=start_h)
     while True:
         stop = input(f"Enter {stopper} when done>>>>>>>")
         if stop == stopper:
@@ -14,33 +14,36 @@ def mujic(file , stopper, start_h = 0):
             break
 
 def log(tame_n, msg):
-    with open("Record new new.txt" , "a") as f:
-        f.write("[tame_n] {msg}\n")
+    with open("Record new new.txt", "a") as f:
+        f.write(f"[{tame_n}] {msg}\n")
+
 if __name__ == '__main__':
 
     eyes_t = time()
     water_t = time()
     physical_t = time()
 
-    eyesecs = 10
-    watersecs = 15
-    physicalsecs = 25
+    eyesecs = 10  # seconds
+    watersecs = 15  # seconds
+    physicalsecs = 25  # seconds
 
-    # tame = strftime("%H:%M:%S")
-    #
-    # while tame >= '17:00:00' and tame <= '09:00:00':
-    #     tame = strftime("%H:%M:%S")
-    #
     today = date.today()
-
     d = today.strftime("%B %d, %Y")
 
     with open("Record new new.txt", "a") as f:
         f.write(f"{d}\n")
 
-    # while tame >= '09:00:00' and tame <= '17:00:00':
     while True:
         tame = strftime("%H:%M:%S")
+        current_time = datetime.strptime(tame, "%H:%M:%S")
+
+        # You can set working hours here if needed
+        start_time = datetime.strptime("09:00:00", "%H:%M:%S")
+        end_time = datetime.strptime("17:00:00", "%H:%M:%S")
+
+        if current_time < start_time or current_time > end_time:
+            print("Outside working hours. Exiting program.")
+            break
 
         if time() - eyes_t > eyesecs:
             print("Time For Eyes Workout")
